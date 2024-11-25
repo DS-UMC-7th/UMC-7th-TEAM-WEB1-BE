@@ -1,26 +1,42 @@
 openapi: 3.0.0
 info:
-  title: 리뷰 조회 API
-  description: 리뷰를 추천순, 최신순, 별점별로 조회할 수 있는 API입니다.
+  title: 강의별 리뷰 조회 API
+  description: 특정 강의 추천순, 최신순, 별점별 리뷰 조회 API
   version: 1.0.0
 paths:
-  /reviews/recommended:
+  /lectures/{lectureId}/reviews/recommended:
     get:
-      summary: 추천순 리뷰 조회
+      summary: 특정 강의의 추천순 리뷰 조회
       description: |
-        리뷰를 추천 수 기준으로 정렬하여 반환합니다.
-        개수 제한(limit)에 따라 4개 또는 전체 리뷰를 반환합니다.
+        한 페이지에 표시할 리뷰 개수와 페이지 번호 지정 가능
       tags:
-        - 리뷰 조회
+        - 강의별 리뷰 조회
       parameters:
+        - in: path
+          name: lectureId
+          description: "강의ID"
+          required: true
+          schema:
+            type: integer
+            example: 101
         - in: query
           name: limit
-          description: 반환할 리뷰의 개수 제한. 값이 없으면 전체 리뷰를 반환합니다.
+          description: "한 페이지에 표시할 리뷰 개수 (기본값: 5)"
           required: false
           schema:
             type: integer
+            default: 5
+            example: 5
+        - in: query
+          name: page
+          description: "페이지 번호 (1부터 시작, 기본값: 1)"
+          required: false
+          schema:
+            type: integer
+            default: 1
+            example: 1
       responses:
-        '200':
+        "200":
           description: 추천순 리뷰 조회 성공
           content:
             application/json:
@@ -39,34 +55,45 @@ paths:
                   result:
                     type: object
                     properties:
+                      totalReviews:
+                        type: integer
+                        description: 전체 리뷰 개수
+                        example: 25
+                      totalPages:
+                        type: integer
+                        description: 전체 페이지 수
+                        example: 5
+                      currentPage:
+                        type: integer
+                        description: 현재 페이지 번호
+                        example: 1
                       reviews:
                         type: array
                         items:
                           type: object
                           properties:
-                            lectureName:
-                              type: string
-                              example: 강의명
-                            instructorName:
-                              type: string
-                              example: 강사명
-                            platform:
-                              type: string
-                              example: 클래스101
                             rating:
                               type: integer
+                              description: 별점
                               example: 5
-                            review:
-                              type: string
-                              example: "이 강의 정말 추천합니다."
-                            recommendations:
-                              type: integer
-                              example: 123
                             date:
                               type: string
                               format: date
+                              description: 리뷰 작성일
                               example: 2024-10-01
-        '400':
+                            duration:
+                              type: string
+                              description: 공부 기간
+                              example: "일주일 이내"
+                            reviewContent:
+                              type: string
+                              description: 리뷰 내용
+                              example: "리뷰내용입니다"
+                            recommendations:
+                              type: integer
+                              description: 추천 수
+                              example: 5
+        "400":
           description: 잘못된 요청
           content:
             application/json:
@@ -77,23 +104,39 @@ paths:
                     type: string
                     example: Invalid request
 
-  /reviews/latest:
+  /lectures/{lectureId}/reviews/latest:
     get:
-      summary: 최신순 리뷰 조회
+      summary: 특정 강의의 최신순 리뷰 조회
       description: |
-        리뷰를 최신 작성일 기준으로 정렬하여 반환합니다.
-        개수 제한(limit)에 따라 4개 또는 전체 리뷰를 반환합니다.
+        한 페이지에 표시할 리뷰 개수와 페이지 번호 지정 가능
       tags:
-        - 리뷰 조회
+        - 강의별 리뷰 조회
       parameters:
+        - in: path
+          name: lectureId
+          description: "강의ID"
+          required: true
+          schema:
+            type: integer
+            example: 101
         - in: query
           name: limit
-          description: 반환할 리뷰의 개수 제한. 값이 없으면 전체 리뷰를 반환합니다.
+          description: "한 페이지에 표시할 리뷰 개수 (기본값: 5)"
           required: false
           schema:
             type: integer
+            default: 5
+            example: 5
+        - in: query
+          name: page
+          description: "페이지 번호 (1부터 시작, 기본값: 1)"
+          required: false
+          schema:
+            type: integer
+            default: 1
+            example: 1
       responses:
-        '200':
+        "200":
           description: 최신순 리뷰 조회 성공
           content:
             application/json:
@@ -112,31 +155,45 @@ paths:
                   result:
                     type: object
                     properties:
+                      totalReviews:
+                        type: integer
+                        description: 전체 리뷰 개수
+                        example: 50
+                      totalPages:
+                        type: integer
+                        description: 전체 페이지 수
+                        example: 10
+                      currentPage:
+                        type: integer
+                        description: 현재 페이지 번호
+                        example: 1
                       reviews:
                         type: array
                         items:
                           type: object
                           properties:
-                            lectureName:
-                              type: string
-                              example: 강의명
-                            instructorName:
-                              type: string
-                              example: 강사명
-                            platform:
-                              type: string
-                              example: 클래스101
                             rating:
                               type: integer
+                              description: 별점
                               example: 4
-                            review:
-                              type: string
-                              example: "좋은 강의입니다. 추천합니다!"
                             date:
                               type: string
                               format: date
+                              description: 리뷰 작성일
                               example: 2024-11-01
-        '400':
+                            duration:
+                              type: string
+                              description: 공부 기간
+                              example: "3달 이내"
+                            reviewContent:
+                              type: string
+                              description: 리뷰 내용
+                              example: "리뷰내용입니다"
+                            recommendations:
+                              type: integer
+                              description: 추천 수
+                              example: 42
+        "400":
           description: 잘못된 요청
           content:
             application/json:
@@ -147,18 +204,24 @@ paths:
                     type: string
                     example: Invalid request
 
-  /reviews/by-rating:
+  /lectures/{lectureId}/reviews/by-rating:
     get:
-      summary: 별점별 리뷰 조회
+      summary: 특정 강의의 별점별 리뷰 조회
       description: |
-        특정 별점(1~5)에 해당하는 리뷰를 필터링하여 반환합니다.
-        개수 제한(limit)에 따라 4개 또는 전체 리뷰를 반환합니다.
+        한 페이지에 표시할 리뷰 개수와 페이지 번호 지정 가능
       tags:
-        - 리뷰 조회
+        - 강의별 리뷰 조회
       parameters:
+        - in: path
+          name: lectureId
+          description: "강의ID"
+          required: true
+          schema:
+            type: integer
+            example: 101
         - in: query
           name: rating
-          description: 필터링할 별점 (1~5 사이 정수)
+          description: "필터링할 별점 (1~5)"
           required: true
           schema:
             type: integer
@@ -167,12 +230,22 @@ paths:
             example: 5
         - in: query
           name: limit
-          description: 반환할 리뷰의 개수 제한. 값이 없으면 전체 리뷰를 반환합니다.
+          description: "한 페이지에 표시할 리뷰 개수 (기본값: 5)"
           required: false
           schema:
             type: integer
+            default: 5
+            example: 5
+        - in: query
+          name: page
+          description: "페이지 번호 (1부터 시작, 기본값: 1)"
+          required: false
+          schema:
+            type: integer
+            default: 1
+            example: 1
       responses:
-        '200':
+        "200":
           description: 별점별 리뷰 조회 성공
           content:
             application/json:
@@ -191,31 +264,45 @@ paths:
                   result:
                     type: object
                     properties:
+                      totalReviews:
+                        type: integer
+                        description: 전체 리뷰 개수
+                        example: 20
+                      totalPages:
+                        type: integer
+                        description: 전체 페이지 수
+                        example: 4
+                      currentPage:
+                        type: integer
+                        description: 현재 페이지 번호
+                        example: 1
                       reviews:
                         type: array
                         items:
                           type: object
                           properties:
-                            lectureName:
-                              type: string
-                              example: 강의명
-                            instructorName:
-                              type: string
-                              example: 강사명
-                            platform:
-                              type: string
-                              example: 클래스101
                             rating:
                               type: integer
+                              description: 별점
                               example: 5
-                            review:
-                              type: string
-                              example: "이 강의는 정말 최고입니다."
                             date:
                               type: string
                               format: date
+                              description: 리뷰 작성일
                               example: 2024-10-15
-        '400':
+                            duration:
+                              type: string
+                              description: 공부 기간
+                              example: "6달 이내"
+                            reviewContent:
+                              type: string
+                              description: 리뷰 내용
+                              example: "리뷰내용입니다"
+                            recommendations:
+                              type: integer
+                              description: 추천 수
+                              example: 7
+        "400":
           description: 잘못된 요청
           content:
             application/json:
