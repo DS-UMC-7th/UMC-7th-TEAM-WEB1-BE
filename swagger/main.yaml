@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  title: 메인화면 관련 API
+  description: 메인화면 관련 API입니다.
+  version: 1.0.0
+paths:
+  /reviews/popular:
+    get:
+      summary: 인기 리뷰 조회
+      description: |
+        개수 제한(limit)에 따라 4개 또는 전체 리뷰를 반환합니다.
+        (기본값: 전체 리뷰)
+      tags:
+        - 메인화면 관련
+      parameters:
+        - in: query
+          name: limit
+          description: 반환할 리뷰의 개수 제한. 값이 없으면 전체 리뷰를 반환합니다.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 인기 리뷰 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  result:
+                    type: object
+                    properties:
+                      reviews:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lectureName:
+                              type: string
+                            instructorName:
+                              type: string
+                            platform:
+                              type: string
+                            rating:
+                              type: integer
+                            review:
+                              type: string
+                            date:
+                              type: string
+                              format: date
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid request
+
+  /reviews/latest:
+    get:
+      summary: 최신 리뷰 조회
+      description: |
+        개수 제한(limit)에 따라 4개 또는 전체 리뷰를 반환합니다.
+        (기본값: 전체 리뷰)
+      tags:
+        - 메인화면 관련
+      parameters:
+        - in: query
+          name: limit
+          description: 반환할 리뷰의 개수 제한. 값이 없으면 전체 리뷰를 반환합니다.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 최신 리뷰 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  result:
+                    type: object
+                    properties:
+                      reviews:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lectureName:
+                              type: string
+                            instructorName:
+                              type: string
+                            platform:
+                              type: string
+                            rating:
+                              type: integer
+                            review:
+                              type: string
+                            date:
+                              type: string
+                              format: date
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid request
