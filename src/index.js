@@ -4,6 +4,7 @@ import express from "express";
 import SwaggerUi from "swagger-ui-express";
 import { specs } from "../config/swagger.config.js";
 import { handleCreateReview } from "./controllers/review.controller.js";
+import { handleSearchLectures } from "./controllers/lecture.controller.js";
 
 dotenv.config();
 
@@ -47,6 +48,8 @@ app.get("/", (req, res) => {
 // 강의평 등록
 app.post("/api/reviews", handleCreateReview);
 
+// 강의 검색
+app.get("/api/lectures/search", handleSearchLectures);
 
 // 전역 오류 처리 미들웨어
 app.use((err, req, res, next) => {
