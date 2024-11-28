@@ -13,11 +13,11 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
-                lectureId:
+                lecture_id:
                   type: integer
                   description: 강의 ID
                   example: 1
