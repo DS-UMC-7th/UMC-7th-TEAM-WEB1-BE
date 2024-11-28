@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: 강의평 등록 API
+  description: 강의평 등록 API
+  version: 1.0.0
+paths:
+  /reviews:
+    post:
+      summary: 강의평 등록
+      description: 강의명, 강사명, 플랫폼, 별점, 리뷰 내용, 수강 기간을 입력받아 강의평 등록
+      tags:
+        - 강의평 등록
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                lectureName:
+                  type: string
+                  description: 강의명
+                  example: JavaScript 입문 강의
+                instructorName:
+                  type: string
+                  description: 강사명
+                  example: 김강사
+                platform:
+                  type: string
+                  description: 강의 플랫폼명
+                  example: 클래스101
+                rating:
+                  type: integer
+                  description: 별점 (1~5 사이 정수)
+                  minimum: 1
+                  maximum: 5
+                  example: 5
+                review:
+                  type: string
+                  description: 강의에 대한 상세 리뷰 (최대 100자)
+                  maxLength: 100
+                  example: 초보자에게 매우 유익하며 설명이 친절합니다.
+                duration:
+                  type: string
+                  description: 강의를 다 듣는 데 걸린 시간
+                  enum:
+                    - 일주일 이내
+                    - 1달 이내
+                    - 3달 이내
+                    - 6달 이내
+                    - 1년 이내
+                    - 아직 다 안 들음
+                  example: 1달 이내
+                image:
+                  type: string
+                  format: binary
+                  description: 강의 사진 (선택)
+      responses:
+        "201":
+          description: 강의평 등록 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 강의평 등록 성공
+                  result:
+                    type: object
+                    properties:
+                      reviewId:
+                        type: integer
+                        description: 생성된 리뷰 ID
+                        example: 1
+        "400":
+          description: 잘못된 요청 (입력값 오류)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Invalid request
