@@ -143,5 +143,12 @@ dist
 
 ../UMC-7th-Summer/
 
+# dependency directories
+node_modules/
+
+# dotenv environment variable files
+.env
+.env.*
+
 
 # End of https://www.toptal.com/developers/gitignore/api/node
