@@ -16,7 +16,7 @@ const getRatingStats = async (lectureId) => {
         "2": stats["2"] || 0,
         "1": stats["1"] || 0,
       },
-      totalReviewes: stats.totalReviewes,
+      totalReview: stats.totalReview,
     };
   };
 
