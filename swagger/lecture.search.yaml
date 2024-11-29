@@ -4,7 +4,7 @@ info:
   description: 사용자가 입력한 키워드로 강의 검색이 가능한 API
   version: 1.0.0
 paths:
-  /lectures/search:
+  /api/lectures/search:
     get:
       summary: 강의 검색
       description: |
@@ -42,6 +42,10 @@ paths:
                     items:
                       type: object
                       properties:
+                        lectureId:
+                          type: integer
+                          description: 강의 ID
+                          example: 1
                         lectureName:
                           type: string
                           description: 강의명

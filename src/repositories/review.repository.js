@@ -1,4 +1,4 @@
-import { pool } from "../../config/db.js"; 
+import { pool } from "../../config/db.js";
 
 // 추천순 리뷰 조회
 export const getReviewsByRecommendation = async (lectureId, limit, offset) => {
@@ -38,4 +38,17 @@ export const getReviewsByLatest = async (lectureId, limit, offset) => {
   `;
   const [[{ totalReviews }]] = await pool.query(countQuery, [lectureId]);
   return { data, totalReviews };
+};
+
+// 리뷰 추가
+export const addReview = async (reviewDto) => {
+  const { lectureId, rating, content, period } = reviewDto;
+
+  const [result] = await pool.query(
+    `INSERT INTO review (lecture_id, rating, content, period)
+    VALUES (?, ?, ?, ?)`,
+    [lectureId, rating, content, period]
+  );
+
+  return { id: result.insertId };
 };
