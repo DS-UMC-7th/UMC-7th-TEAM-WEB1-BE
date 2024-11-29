@@ -6,8 +6,8 @@ import { specs } from "../config/swagger.config.js";
 import { handleCreateReview } from "./controllers/review.controller.js";
 import { GetAllPopularReviews, GetAllLatestReviews } from "./controllers/main.controller.js";
 import { handleSearchLectures } from "./controllers/lecture.controller.js"; 
-import { lectureRoutes } from "./routes/lectures.routes.js";
-import { reviewRoutes } from "./routes/recommend.routes.js";
+import  lectureRoutes  from "./routes/lectures.routes.js";
+import  reviewRoutes  from "./routes/recommend.routes.js";
 
 dotenv.config();
 
