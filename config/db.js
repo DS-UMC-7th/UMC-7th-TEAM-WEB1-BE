@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const pool = mysql.createPool({
-  host: process.env.DB_HOST || "localhost", // mysql의 hostname
-  user: process.env.DB_USER || "root", // user 이름
+  host: process.env.DB_HOST, 
+  user: process.env.DB_USER, 
   port: process.env.DB_PORT || 3306, // 포트 번호
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD, 
