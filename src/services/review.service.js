@@ -1,6 +1,51 @@
-import { bodyToReview } from "../dtos/review.dto.js";
-import { addReview } from "../repositories/review.repository.js";
+import {
+  getReviewsByRecommendation,
+  getReviewsByLatest,
+  addReview,
+} from "../repositories/review.repository.js";
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toISOString().split("T")[0]; 
+};
+
+// 추천순 리뷰 조회
+export const fetchRecommendedReviews = async (lectureId, limit, page) => {
+  const offset = (page - 1) * limit;
+  const reviews = await getReviewsByRecommendation(lectureId, limit, offset);
+
+  const formattedReviews = reviews.data.map((review) => ({
+    ...review,
+    date: formatDate(review.date),
+  }));
+
+  return {
+    totalReviews: reviews.totalReviews,
+    totalPages: Math.ceil(reviews.totalReviews / limit),
+    currentPage: page,
+    reviews: formattedReviews,
+  };
+};
+
+// 최신순 리뷰 조회
+export const fetchLatestReviews = async (lectureId, limit, page) => {
+  const offset = (page - 1) * limit;
+  const reviews = await getReviewsByLatest(lectureId, limit, offset);
+
+  const formattedReviews = reviews.data.map((review) => ({
+    ...review,
+    date: formatDate(review.date),
+  }));
+
+  return {
+    totalReviews: reviews.totalReviews,
+    totalPages: Math.ceil(reviews.totalReviews / limit),
+    currentPage: page,
+    reviews: formattedReviews,
+  };
+};
+
+// 리뷰 생성
 export const reviewCreate = async (reviewDto) => {
   // 평점 유효성 검증
   if (reviewDto.rating < 1 || reviewDto.rating > 5) {
@@ -11,4 +56,4 @@ export const reviewCreate = async (reviewDto) => {
   const review = await addReview(reviewDto);
 
   return review;
-}
+};
