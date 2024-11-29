@@ -6,6 +6,7 @@ import { specs } from "../config/swagger.config.js";
 import { handleCreateReview } from "./controllers/review.controller.js";
 import { GetAllPopularReviews, GetAllLatestReviews } from "./controllers/main.controller.js";
 import { handleSearchLectures } from "./controllers/lecture.controller.js"; 
+import { lectureRoutes } from "./routes/lectures.routes.js";
 
 dotenv.config();
 
@@ -57,6 +58,9 @@ app.get("/reviews/latest", GetAllLatestReviews);
 
 // 강의 검색
 app.get("/api/lectures/search", handleSearchLectures);
+
+//강의 별점 조회
+app.use("/lectures", lectureRoutes);
 
 // 전역 오류 처리 미들웨어
 app.use((err, req, res, next) => {
