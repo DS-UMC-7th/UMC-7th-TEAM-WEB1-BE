@@ -7,6 +7,7 @@ import { handleCreateReview } from "./controllers/review.controller.js";
 import { GetAllPopularReviews, GetAllLatestReviews } from "./controllers/main.controller.js";
 import { handleSearchLectures } from "./controllers/lecture.controller.js"; 
 import { lectureRoutes } from "./routes/lectures.routes.js";
+import { reviewRoutes } from "./routes/recommend.routes.js";
 
 dotenv.config();
 
@@ -61,6 +62,9 @@ app.get("/api/lectures/search", handleSearchLectures);
 
 //강의 별점 조회
 app.use("/lectures", lectureRoutes);
+
+//리뷰 추천
+app.use("/comments", reviewRoutes);
 
 // 전역 오류 처리 미들웨어
 app.use((err, req, res, next) => {
