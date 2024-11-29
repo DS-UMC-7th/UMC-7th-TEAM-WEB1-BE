@@ -14,7 +14,7 @@ export const findPopularReviews = async (limit) => {
       FROM review r
       INNER JOIN lecture l ON r.lecture_id = l.id
       ORDER BY 
-        (SELECT COUNT(*) FROM review_likes rl WHERE rl.review_id = r.id) DESC
+        (SELECT COUNT(*) FROM review_Likes rl WHERE rl.review_id = r.id) DESC
       ${limit ? "LIMIT ?" : ""}
     `;
   

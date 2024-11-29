@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://52.79.186.244:3000",
+        url: "http://3.38.66.123:3000",
         description: "개발 서버",
       }
     ],
