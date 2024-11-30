@@ -17,7 +17,7 @@ export const getReviewsByRecommendation = async (lectureId, limit, offset) => {
     WHERE lecture_id = ?
   `;
   const [[{ totalReviews }]] = await pool.query(countQuery, [lectureId]);
-  return { data, totalReviews };
+  return { data: data || [], totalReviews: totalReviews || 0 };
 };
 
 // 최신순 리뷰 조회
@@ -37,7 +37,7 @@ export const getReviewsByLatest = async (lectureId, limit, offset) => {
     WHERE lecture_id = ?
   `;
   const [[{ totalReviews }]] = await pool.query(countQuery, [lectureId]);
-  return { data, totalReviews };
+  return { data: data || [], totalReviews: totalReviews || 0 };
 };
 
 // 리뷰 추가

@@ -9,10 +9,14 @@ import {
 // 추천순 리뷰 조회
 export const getRecommendedReviews = async (req, res, next) => {
   const { lectureId } = req.params;
-  const limit = parseInt(req.query.limit, 10) || 5;
-  const page = parseInt(req.query.page, 10) || 1;
+  const limit = Math.max(parseInt(req.query.limit, 10) || 5, 1);
+  const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
 
   try {
+    if (!lectureId || isNaN(lectureId)) {
+      return res.error({ message: "유효한 lectureId가 필요합니다." });
+    }
+
     const result = await fetchRecommendedReviews(lectureId, limit, page);
     res.success(result, "추천순 리뷰 조회 성공");
   } catch (error) {
@@ -24,10 +28,14 @@ export const getRecommendedReviews = async (req, res, next) => {
 // 최신순 리뷰 조회
 export const getLatestReviews = async (req, res, next) => {
   const { lectureId } = req.params;
-  const limit = parseInt(req.query.limit, 10) || 5;
-  const page = parseInt(req.query.page, 10) || 1;
+  const limit = Math.max(parseInt(req.query.limit, 10) || 5, 1);
+  const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
 
   try {
+    if (!lectureId || isNaN(lectureId)) {
+      return res.error({ message: "유효한 lectureId가 필요합니다." });
+    }
+
     const result = await fetchLatestReviews(lectureId, limit, page);
     res.success(result, "최신순 리뷰 조회 성공");
   } catch (error) {
