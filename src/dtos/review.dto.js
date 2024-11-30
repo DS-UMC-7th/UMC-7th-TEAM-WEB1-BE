@@ -4,6 +4,8 @@ export class ReviewRequestDto {
     this.lectureId = parseInt(lectureId, 10);
     this.limit = parseInt(limit, 10);
     this.page = parseInt(page, 10);
+
+    this.validate();
   }
 
   validate() {
