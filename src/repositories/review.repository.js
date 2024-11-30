@@ -3,11 +3,15 @@ import { pool } from "../../config/db.js";
 // 추천순 리뷰 조회
 export const getReviewsByRecommendation = async (lectureId, limit, offset) => {
   const query = `
-    SELECT rating, created_at AS date, period AS duration, content AS reviewContent, recommendations
-    FROM review
-    WHERE lecture_id = ?
-    ORDER BY recommendations DESC
-    LIMIT ? OFFSET ?
+    SELECT r.rating, r.created_at AS date, r.period AS duration, r.content AS reviewContent,
+    COUNT(rl.id) AS recommendations
+FROM review r
+LEFT JOIN review_Likes rl ON r.id = rl.review_id
+WHERE r.lecture_id = ?
+GROUP BY r.id
+ORDER BY recommendations DESC, r.created_at DESC
+LIMIT ? OFFSET ?
+
   `;
   const [data] = await pool.query(query, [lectureId, limit, offset]);
 
@@ -23,7 +27,7 @@ export const getReviewsByRecommendation = async (lectureId, limit, offset) => {
 // 최신순 리뷰 조회
 export const getReviewsByLatest = async (lectureId, limit, offset) => {
   const query = `
-    SELECT rating, created_at AS date, period AS duration, content AS reviewContent, recommendations
+    SELECT rating, created_at AS date, period AS duration, content AS reviewContent
     FROM review
     WHERE lecture_id = ?
     ORDER BY created_at DESC
