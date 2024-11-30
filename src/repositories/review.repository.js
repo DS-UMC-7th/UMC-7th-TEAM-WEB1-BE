@@ -4,15 +4,16 @@ import { pool } from "../../config/db.js";
 export const getReviewsByRecommendation = async (lectureId, limit, offset) => {
   const query = `
     SELECT r.rating, r.created_at AS date, r.period AS duration, r.content AS reviewContent,
-    COUNT(rl.id) AS recommendations
-FROM review r
-LEFT JOIN review_Likes rl ON r.id = rl.review_id
-WHERE r.lecture_id = ?
-GROUP BY r.id
-ORDER BY recommendations DESC, r.created_at DESC
-LIMIT ? OFFSET ?
-
+          (SELECT COUNT(*) FROM review_Likes WHERE review_Likes.review_id = r.id) AS recommendations
+    FROM review r
+    WHERE r.lecture_id = ?
+    ORDER BY recommendations DESC, r.created_at DESC
+    LIMIT ? OFFSET ?
   `;
+
+  console.log("실행 쿼리:", query);
+  console.log("쿼리 파라미터:", [lectureId, limit, offset]);
+
   const [data] = await pool.query(query, [lectureId, limit, offset]);
 
   const countQuery = `
