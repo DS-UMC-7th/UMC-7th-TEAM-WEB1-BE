@@ -5,6 +5,7 @@ import { pool } from "../../config/db.js";
 export const findPopularReviews = async (limit) => {
   const query = `
     SELECT 
+      r.lecture_id AS lecture_id,
       l.name AS lecture_name, 
       l.teacher, 
       l.platform, 
@@ -26,6 +27,7 @@ export const findPopularReviews = async (limit) => {
   export const findLatestReviews = async (limit) => {
     const query = `
       SELECT 
+        r.lecture_id AS lecture_id,
         l.name AS lecture_name, 
         l.teacher, 
         l.platform, 

@@ -41,6 +41,9 @@ paths:
                         items:
                           type: object
                           properties:
+                            lectureId:
+                              type: integer
+                              description: "강의 ID"
                             lectureName:
                               type: string
                             instructorName:
@@ -102,6 +105,9 @@ paths:
                         items:
                           type: object
                           properties:
+                            lectureId:
+                              type: integer
+                              description: "강의 ID"
                             lectureName:
                               type: string
                             instructorName:
