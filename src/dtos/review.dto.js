@@ -4,6 +4,8 @@ export class ReviewRequestDto {
     this.lectureId = parseInt(lectureId, 10);
     this.limit = parseInt(limit, 10);
     this.page = parseInt(page, 10);
+
+    this.validate();
   }
 
   validate() {
@@ -36,14 +38,21 @@ export class ReviewResponseDto {
 
 // 요청 바디를 Review DTO로 변환
 export const bodyToReview = (body) => {
+  if (!body.lecture_id || isNaN(body.lecture_id)) {
+    throw new Error("유효한 lecture_id가 필요합니다.");
+  }
+  if (!body.rating || isNaN(body.rating) || body.rating < 1 || body.rating > 5) {
+    throw new Error("평점은 1~5 사이의 값이어야 합니다.");
+  }
+
   const reviewDto = {
-    lectureId: parseInt(body.lecture_id, 10), // lecture_id를 lectureId로 변환
-    rating: parseFloat(body.rating),         // 평점
-    content: body.review,                    // 리뷰 내용
-    period: body.duration || "",             // 수강 기간
+    lectureId: parseInt(body.lecture_id, 10),
+    rating: parseFloat(body.rating),
+    content: body.review || "",
+    period: body.duration || "",
   };
 
-  console.log("bodyToReview의 변환된 reviewDto: ", reviewDto); // 변환된 DTO 확인
-
+  console.log("bodyToReview의 변환된 reviewDto: ", reviewDto);
   return reviewDto;
 };
+

@@ -14,6 +14,15 @@ export const fetchRecommendedReviews = async (lectureId, limit, page) => {
   const offset = (page - 1) * limit;
   const reviews = await getReviewsByRecommendation(lectureId, limit, offset);
 
+  if (!reviews.data || reviews.data.length === 0) {
+    return {
+      totalReviews: 0,
+      totalPages: 0,
+      currentPage: page,
+      reviews: [],
+    };
+  }
+
   const formattedReviews = reviews.data.map((review) => ({
     ...review,
     date: formatDate(review.date),
@@ -32,6 +41,15 @@ export const fetchLatestReviews = async (lectureId, limit, page) => {
   const offset = (page - 1) * limit;
   const reviews = await getReviewsByLatest(lectureId, limit, offset);
 
+  if (!reviews.data || reviews.data.length === 0) {
+    return {
+      totalReviews: 0,
+      totalPages: 0,
+      currentPage: page,
+      reviews: [],
+    };
+  }
+  
   const formattedReviews = reviews.data.map((review) => ({
     ...review,
     date: formatDate(review.date),
