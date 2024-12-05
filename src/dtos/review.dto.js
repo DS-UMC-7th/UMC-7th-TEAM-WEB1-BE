@@ -25,6 +25,7 @@ export class ReviewRequestDto {
 export class ReviewResponseDto {
   constructor({ data, totalReviews, message }) {
     this.data = data.map((item) => ({
+      reviewId: item.reviewId,
       rating: item.rating,
       date: item.date,
       duration: item.duration,
