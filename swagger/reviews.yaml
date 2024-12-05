@@ -72,6 +72,10 @@ paths:
                         items:
                           type: object
                           properties:
+                            reviewId:
+                              type: integer
+                              description: 리뷰 ID
+                              example: 1
                             rating:
                               type: integer
                               description: 별점
@@ -172,6 +176,10 @@ paths:
                         items:
                           type: object
                           properties:
+                            reviewId:
+                              type: integer
+                              description: 리뷰 ID
+                              example: 1
                             rating:
                               type: integer
                               description: 별점
