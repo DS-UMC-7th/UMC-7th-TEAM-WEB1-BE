@@ -58,6 +58,47 @@ paths:
                           type: string
                           description: 플랫폼명
                           example: 클래스101
+                        rating:
+                          type: integer,
+                          description: 강의 별점 통계
+                          example: 5
+                        date:
+                          type: string
+                          description: 강의 등록 날짜
+                          example: 2024-11-27T09:21:07.155Z
+                        reviews:
+                          type: array
+                          description: 강의 리뷰 목록
+                          items:
+                            type: object
+                            properties:
+                              reviewId:
+                                type: integer
+                                description: 리뷰 ID
+                                example: 2
+                              rating:
+                                type: integer
+                                description: 강의 별점 (리뷰)
+                                example: 1
+                              content:
+                                type: string
+                                description: 리뷰 내용
+                                example: 리뷰 내용
+                              period:
+                                type: string
+                                description: 강의 수강 기간
+                                enum:
+                                - 일주일 이내
+                                - 3달 이내
+                                - 6달 이내
+                                - 1년 이내
+                                - 아직 수강중임
+                                example: 3달 이내
+                              createdAt:
+                                type: string
+                                description: 리뷰 등록 일자
+                                example: 2024-11-27T09:21:07.155Z
+
         "400":
           description: 잘못된 요청
           content:
