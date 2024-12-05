@@ -52,6 +52,8 @@ paths:
                               type: string
                             rating:
                               type: integer
+                            reviewId:
+                              type: string
                             review:
                               type: string
                             date:
@@ -116,6 +118,8 @@ paths:
                               type: string
                             rating:
                               type: integer
+                            reviewId:
+                              type: string
                             review:
                               type: string
                             date:

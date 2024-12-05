@@ -10,6 +10,7 @@ export const mapReviewToDTO = (review) => {
     instructorName: review.teacher,
     platform: review.platform,
     rating: review.rating,
+    reviewId: review.id,
     review: review.content,
     date: formattedDate, 
   };

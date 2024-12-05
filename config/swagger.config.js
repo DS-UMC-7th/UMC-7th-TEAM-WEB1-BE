@@ -11,11 +11,11 @@ const options = {
     },
     servers: [
       {
-        url: "http://3.38.66.123:3000",
-        description: "테스트 서버"
+        // url: "http://3.38.66.123:3000",
+        // description: "테스트 서버"
 
-        // url: "http://localhost:3000",
-        // description: "개발 서버",
+        url: "http://localhost:3000",
+        description: "개발 서버",
       }
     ],
   },
