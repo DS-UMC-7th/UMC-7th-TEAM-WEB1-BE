@@ -32,7 +32,7 @@ export const findPopularReviews = async (limit) => {
         l.name AS lecture_name, 
         l.teacher, 
         l.platform,
-        r.review_id, 
+        r.id, 
         r.rating, 
         r.content, 
         r.created_at
